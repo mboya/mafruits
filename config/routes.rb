@@ -1,0 +1,6 @@
+Rails.application.routes.draw do
+  root 'home#index'
+  # messenger
+  match 'messenger/updates', to: 'messenger#verify', as: 'handle_messenger_verification', via: 'get'
+  match 'messenger/updates', to: 'messenger#updates', as: 'handle_messenger_updates', via: 'post'
+end
