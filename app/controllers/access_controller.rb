@@ -1,5 +1,5 @@
 class AccessController < ApplicationController
   def updates
-    render text: 'ok'
+    render plain: 'ok'
   end
 end
