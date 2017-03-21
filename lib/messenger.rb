@@ -3,8 +3,6 @@ class Messenger
     payload[:entry].collect do |entry|
       {
         page_id: entry[:id],
-        receipts: _get_receipts(entry),
-        posts: _get_posts(entry),
         messages: entry[:messaging].try(:collect) do |message|
           {
             sender_id: message[:sender][:id],
