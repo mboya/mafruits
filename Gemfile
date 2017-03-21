@@ -33,6 +33,7 @@ gem 'figaro'
 gem 'sidekiq'
 gem 'erb2haml'
 gem 'haml-rails'
+gem 'httparty'
 
 group :production do
   gem 'pg'
