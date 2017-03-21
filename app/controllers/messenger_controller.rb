@@ -16,11 +16,12 @@ class MessengerController < ApplicationController
         begin
           sender = message[:sender_id]
           if message[:type] != 'Delivery'
-            if message[:text] === 'start'
+            if message[:text] === 'Get Started'
               options = ['order', 'stroll']
               Messenger.send_message(sender, 'welcome', options)
             else
-              Messenger.send_message(sender, "try sending start to get you sorted")
+              options = ['Get Started']
+              Messenger.send_message(sender, "try", options)
             end
           end
         rescue Exception => e
