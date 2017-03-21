@@ -6,6 +6,7 @@ class Messenger
     payload[:entry].collect do |entry|
       {
         page_id: entry[:id],
+        receipts: _get_receipts(entry),
         messages: entry[:messaging].try(:collect) do |message|
           {
             sender_id: message[:sender][:id],
@@ -23,7 +24,31 @@ class Messenger
     end
   end
 
+  def self.send_message to, message, options=[]
+    base_url = "#{BASE_URL}/me/messages?access_token=#{TOKEN}"
+    headers = {'Content-Type' => 'application/json'}
+
+    if !options.blank?
+      body = { recipient: { id: to }, message: quick_response(message, options)}.to_json
+    else
+      body = {recipient: {id: to},message: {text: message}}.to_json
+    end
+
+    HTTParty.post(base_url, headers: headers, body: body)
+  end
+
+  def self.quick_response text, options=[]
+    {
+      text: text,
+      quick_replies: options.collect { |o| { content_type: "text", title: o, payload: o } }
+    }
+  end
+
   private
+    def self._get_receipts entry
+      entry[:delivery].try(:[], :mids)
+    end
+
     def self._entry_type? entry
       if entry[:message] && entry[:message][:text]
         return "Text"
