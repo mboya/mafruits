@@ -9,5 +9,7 @@ class MessengerController < ApplicationController
 
   def updates
     render text: 'ok'
+
+    logger.info "this is the payload #{params}"
   end
 end
