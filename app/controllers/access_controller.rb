@@ -5,5 +5,6 @@ class AccessController < ApplicationController
 
   def updates
     render plain: 'ok'
+    logger.info "#{params}"
   end
 end
