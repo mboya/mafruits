@@ -1,6 +1,6 @@
 class MessengerController < ApplicationController
   def verify
-    if params['hub.mode'] == 'subscribe' && params['hub.verify_token'] == ENV['FACEBOOK_VERIFICATION_TOKEN']
+    if params['hub.mode'] == 'subscribe' && params['hub.verify_token'] == "mafruits_token"
       render text: params['hub.challenge']
     else
       render status: :bad_request, text: nil
