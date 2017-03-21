@@ -1,4 +1,7 @@
 class Messenger
+  BASE_URL = 'https://graph.facebook.com/v2.6'
+  TOKEN = "EAAal3liBQT0BAE4ZBO7wp6PLhlPFG4bW4GC3lYkl6iVIk5RSrgkowP4ZBRXMR1vNSw0R36TC4TdDQ0ucpoYImHPCI6hlQXkZBO0MpZADZA5mVnyWdatAarZBSpgEF5yGV6mDPQPMfmxgLxX68oZCZBU9WXomCsKoaGeTwoiTGG0mWAZDZD"
+
   def self.parse_payload payload
     payload[:entry].collect do |entry|
       {

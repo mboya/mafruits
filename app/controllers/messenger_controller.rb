@@ -12,7 +12,7 @@ class MessengerController < ApplicationController
   def updates
     render text: 'ok'
     Messenger.parse_payload(params).each do |entry|
-      logger.info "#{entry[:messages]}"
+      logger.info "#{entry[:messages][:text]}"
     end
   end
 end
