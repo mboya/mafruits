@@ -19,4 +19,35 @@ class Messenger
       }
     end
   end
+
+  private
+    def self._entry_type? entry
+      if entry[:message] && entry[:message][:text]
+        return "Text"
+      elsif entry[:message] && entry[:message][:attachments]          
+        attachment = entry[:message][:attachments].first
+        if attachment[:type] == 'image'
+          return 'Image'
+        elsif attachment[:type] == 'video'
+          return 'Video'
+        elsif attachment[:type] == 'audio'
+          return 'Audio'
+        elsif attachment[:type] == 'file'
+          return 'File'
+        elsif attachment[:type] == 'location'
+          return 'Location'            
+        end      
+      elsif entry[:delivery]
+        return 'Delivery'
+      elsif entry[:postback]
+        return 'Postback'
+      elsif entry[:changes]
+        return 'Feed'
+      end
+    end
+
+    def self._image_url entry
+      entry.try(:[], :message).try(:[], :attachments).try(:first).try(:[], :payload).try(:[], :url)
+    end
+
 end
