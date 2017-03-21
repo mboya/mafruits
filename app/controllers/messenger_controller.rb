@@ -1,3 +1,5 @@
+require 'messenger'
+
 class MessengerController < ApplicationController
   def verify
     if params['hub.mode'] == 'subscribe' && params['hub.verify_token'] == "mafruits_token"
@@ -9,7 +11,8 @@ class MessengerController < ApplicationController
 
   def updates
     render text: 'ok'
-
-    logger.info "this is the payload #{params}"
+    Messenger.parse_payload(params).each do |entry|
+      logger.info "#{entry[:messages]}"
+    end
   end
 end
