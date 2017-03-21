@@ -44,6 +44,49 @@ class Messenger
     }
   end
 
+  def self.send_products to
+    
+  end
+
+  def self.send_receipt to
+    base_url = "#{BASE_URL}/me/messages?access_token=#{TOKEN}"
+    headers = {'Content-Type' => 'application/json'}
+
+    body = {
+      recipient: {id: to},
+      message: {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "receipt",
+            recipient_name: "Messenger User",
+            order_number: "1234567890",
+            currency: 'KES',
+            payment_method: 'M-Pesa',
+            order_url: '',
+            timestamp: '1428444852',
+            elements: [
+              {
+                title: 'fruit',
+                price: '75.00'
+              }
+            ],
+            summary: {total_cost: '75.00'},
+            address: {
+              street_1: "1 Hacker Way",
+              city: "Menlo Park",
+              postal_code: "94025",
+              state: "CA",
+              country: "US"
+            }
+          }
+        }
+      }
+    }.to_json
+
+    HTTParty.post(base_url, headers: headers, body: body)
+  end
+
   private
     def self._get_receipts entry
       entry[:delivery].try(:[], :mids)
